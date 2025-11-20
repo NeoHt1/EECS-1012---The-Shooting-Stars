@@ -130,17 +130,53 @@ function renderQuiz(questions) {
   });
 }
 
-
-
 // Initialize
 let currentQuestions = pickRandomQuestions(QUESTION_BANK, 10);
 renderQuiz(currentQuestions);
 
+//Timer:
+//get current date and time
+var now = new Date().getTime();
 
+//set the date were counting down to
+var countDownDate = now + (5 * 60 * 1000);
+
+//update the count down every 1 second
+var x = setInterval(function() {
+  //for comparison get current time
+  var currentTime = new Date().getTime();
+    
+  //find the distance between now and the count down date
+  var distance = countDownDate - currentTime;
+    
+  //calculations for minutes and seconds
+  var totalSeconds = Math.floor(distance / 1000);
+  var minutes = Math.floor(totalSeconds / 60);
+  var seconds = totalSeconds % 60;
+    
+  //if the count down is over
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("timer").innerHTML = "EXPIRED";
+    location.replace("home.html");
+  }
+
+  //output the result in an element
+  document.getElementById("timer").innerHTML = minutes + "m " + (seconds < 10 ? '0' : '') + seconds + "s ";
+}, 1000);
 
 //submit button
 document.getElementById("submitBtn").addEventListener("click", () => {
   document.getElementById("score").textContent = ""; 
+  // clear previous score
+  let score = 0;
+  currentQuestions.forEach((q) => {
+    const selected = document.querySelector(`input[name="${q.id}"]:checked`);
+    if (selected && parseInt(selected.value) === q.answerIndex) {
+      score++;
+    }  
+  });
+  location.replace(`resultPage.html?score=${score}&total=${currentQuestions.length}`);
 });
 
 //reset button
@@ -150,5 +186,7 @@ document.getElementById("resetBtn").addEventListener("click", () => {
   renderQuiz(currentQuestions);
 });
 
-
-
+//retry button
+document.getElementById("retryBtn").addEventListener("click", () => {
+  location.replace("mainQuestionsPage.html");
+});

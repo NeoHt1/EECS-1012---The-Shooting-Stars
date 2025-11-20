@@ -1,10 +1,20 @@
-body {
+html, body {
+    height: 100%;
     margin: 0;
     font-family: sans-serif;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+header, footer {
+    padding: 1%;
+    flex-shrink: 0;
 }
 h1 {
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+    font-size: 40px;
 }
 section {
     margin: 2%;
@@ -21,8 +31,13 @@ button {
     border-radius: 4px;
     cursor: pointer;
 }
-header{
-    padding: 1%;
+header#home {
+    padding: 2%;
+    background-color: rgb(51, 54, 56);
+}
+div#spacing {
+    margin-top: 6.5%;
+    margin-bottom: 6.5%;
 }
 footer {
     background-color: lightgrey;
